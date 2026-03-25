@@ -85,9 +85,9 @@ wss.on("connection", (ws) => {
     room.players.delete(ws);
     room.clients.delete(ws);
     if (room.host === ws) {
-      broadcast(room, { type: "host_left" });
-      delete rooms[roomId];
+        broadcast(room, { type: "host_left" });
+        delete rooms[roomId];
     }
-  });
+});
 });
 console.log("Relay сервер запущен на порту " + PORT);
