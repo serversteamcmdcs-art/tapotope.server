@@ -1,7 +1,6 @@
 const WebSocket = require("ws");
 const PORT = process.env.PORT || 8080;
 const wss = new WebSocket.Server({ port: PORT });
-
 const rooms = {};
 let nextClientId = 2;
 
@@ -60,6 +59,7 @@ wss.on("connection", (ws) => {
         const found = getRoomByWs(ws);
         if (!found || found.room.host !== ws) return;
         broadcast(found.room, { type: "game_started" });
+        sendTo(ws, { type: "game_started" });
         break;
       }
       case "relay": {
@@ -90,5 +90,4 @@ wss.on("connection", (ws) => {
     }
   });
 });
-
 console.log("Relay сервер запущен на порту " + PORT);
